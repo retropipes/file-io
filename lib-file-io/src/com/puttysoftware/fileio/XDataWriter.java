@@ -151,6 +151,14 @@ public class XDataWriter implements DataIOWriter {
 	    throw new DataIOException(e);
 	}
     }
+    
+    protected void writeRawString(final String s) throws DataIOException {
+	try {
+	    this.fileIO.write(s);
+	} catch (IOException e) {
+	    throw new DataIOException(e);
+	}
+    }
 
     private void writeXHeader() throws DataIOException {
 	try {

@@ -221,6 +221,16 @@ public class XDataReader implements DataIOReader {
 	return line == null;
     }
 
+    protected String readRawString() throws DataIOException {
+	String line = "";
+	try {
+	    line = this.fileIO.readLine();
+	} catch (IOException e) {
+	    throw new DataIOException(e);
+	}
+	return line;
+    }
+
     public void readOpeningGroup(final String groupName) throws DataIOException {
 	String line = "";
 	try {
@@ -249,21 +259,21 @@ public class XDataReader implements DataIOReader {
 	}
     }
 
-    private static void validateOpeningTag(final String tag, final String tagType) throws DataIOException {
+    protected static void validateOpeningTag(final String tag, final String tagType) throws DataIOException {
 	if (!tag.equals("<" + tagType + ">")) { //$NON-NLS-1$ //$NON-NLS-2$
 	    throw new DataIOException("Expected opening tag of <" //$NON-NLS-1$
 		    + tagType + ">, found " + tag + "!"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
     }
 
-    private static void validateClosingTag(final String tag, final String tagType) throws DataIOException {
+    protected static void validateClosingTag(final String tag, final String tagType) throws DataIOException {
 	if (!tag.equals("</" + tagType + ">")) { //$NON-NLS-1$ //$NON-NLS-2$
 	    throw new DataIOException("Expected closing tag of </" //$NON-NLS-1$
 		    + tagType + ">, found " + tag + "!"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
     }
 
-    private static String[] splitLine(final String line) throws DataIOException {
+    protected static String[] splitLine(final String line) throws DataIOException {
 	final String[] split = new String[3];
 	final int loc0 = line.indexOf('>') + 1;
 	final int loc2 = line.indexOf('<', loc0);
